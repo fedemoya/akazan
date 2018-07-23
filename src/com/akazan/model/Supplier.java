@@ -5,9 +5,10 @@ import javax.persistence.*;
 import org.openxava.annotations.*;
 
 @Entity
-public class Client {
+@Table(name = "supplier")
+public class Supplier {
 
-	private static final String SEQ_NAME = "client_seq";
+	private static final String SEQ_NAME = "supplier_seq";
 
 	@Id
 	@SequenceGenerator(name = SEQ_NAME, catalog = "akazan", sequenceName = SEQ_NAME, allocationSize = 1, initialValue = 1)
@@ -17,13 +18,15 @@ public class Client {
 
 	@Required
 	private String name;
-	@Required
-	private String lastname;
 
-	private String mobileNumber;
+	private String phoneNumber;
 
 	@Embedded
 	private Address address;
+
+	private String iva;
+
+	private String cuit;
 
 	public Long getId() {
 		return id;
@@ -41,20 +44,12 @@ public class Client {
 		this.name = name;
 	}
 
-	public String getLastname() {
-		return lastname;
+	public String getPhoneNumber() {
+		return phoneNumber;
 	}
 
-	public void setLastname(String lastname) {
-		this.lastname = lastname;
-	}
-
-	public String getMobileNumber() {
-		return mobileNumber;
-	}
-
-	public void setMobileNumber(String mobileNumber) {
-		this.mobileNumber = mobileNumber;
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
 	}
 
 	public Address getAddress() {
@@ -63,6 +58,22 @@ public class Client {
 
 	public void setAddress(Address address) {
 		this.address = address;
+	}
+
+	public String getIva() {
+		return iva;
+	}
+
+	public void setIva(String iva) {
+		this.iva = iva;
+	}
+
+	public String getCuit() {
+		return cuit;
+	}
+
+	public void setCuit(String cuit) {
+		this.cuit = cuit;
 	}
 
 }
