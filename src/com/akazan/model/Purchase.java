@@ -25,7 +25,7 @@ public class Purchase {
 	@Required
 	private Date date;
 	
-	@OneToMany(mappedBy="purchase", cascade=CascadeType.REMOVE)
+	@OneToMany(mappedBy="purchase", cascade=CascadeType.ALL)
 	private List<PurchaseItem> purchaseItems;
 	
 	// Callbacks

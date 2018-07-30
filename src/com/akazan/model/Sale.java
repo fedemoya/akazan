@@ -19,13 +19,13 @@ public class Sale {
 	private Long id;
 	
 	@ManyToOne(fetch = FetchType.EAGER, optional = true)
-	@JoinColumn(name = "client_id")
-	private Client client;
+	@JoinColumn(name = "customer_id")
+	private Customer customer;
 	
 	@Required
 	private Date date;
 	
-	@OneToMany(mappedBy="sale", cascade=CascadeType.REMOVE)
+	@OneToMany(mappedBy="sale", cascade=CascadeType.ALL)
 	private List<SaleItem> saleItems;
 	
 	// Callbacks
@@ -41,12 +41,12 @@ public class Sale {
 		this.id = id;
 	}
 
-	public Client getClient() {
-		return client;
+	public Customer getCustomer() {
+		return customer;
 	}
 
-	public void setClient(Client client) {
-		this.client = client;
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
 	}
 
 	public Date getDate() {

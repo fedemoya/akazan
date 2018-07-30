@@ -5,7 +5,7 @@ import javax.persistence.*;
 import org.openxava.annotations.*;
 
 @Entity
-public class Client {
+public class Customer {
 
 	private static final String SEQ_NAME = "client_seq";
 

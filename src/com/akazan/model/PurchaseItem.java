@@ -2,12 +2,13 @@ package com.akazan.model;
 
 import javax.persistence.*;
 
+import org.apache.commons.logging.*;
 import org.openxava.annotations.*;
 
 @Entity
 @Table(name = "purchase_item")
 public class PurchaseItem {
-
+	
 	private static final String SEQ_NAME = "purchase_item_seq";
 
 	@Id
@@ -28,16 +29,20 @@ public class PurchaseItem {
 
 	private Double price;
 	
+	private Double profitPercentage;
+	
 	// Callbacks
 	
 	@PostCreate
 	public void increaseProductStock() {
 		product.setAmount(product.getAmount() + amount);
+		product.setPrice(price * (1 +  profitPercentage / 100));
 	}
 	
 	@PreDelete
 	public void decreaseProductStock() {
 		product.setAmount(product.getAmount() - amount);
+		product.setPrice(0.0);
 	}
 	
 	// Getters & Setters
@@ -80,6 +85,14 @@ public class PurchaseItem {
 
 	public void setPrice(Double price) {
 		this.price = price;
+	}
+
+	public Double getProfitPercentage() {
+		return profitPercentage;
+	}
+
+	public void setProfitPercentage(Double profitPercentage) {
+		this.profitPercentage = profitPercentage;
 	}
 
 }
