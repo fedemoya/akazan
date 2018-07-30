@@ -5,6 +5,7 @@ import java.util.*;
 import javax.persistence.*;
 
 import org.openxava.annotations.*;
+import org.openxava.jpa.*;
 
 @Entity
 @Table(name="product_price_update")
@@ -36,7 +37,14 @@ public class ProductPriceUpdate {
 	
 	@PreDelete
 	public void deletePPUpdatesFromJoinTable() {
-		// TODO
+		double divisor = 1 + percentage / 100;
+		for (Product product : products) {
+			product.setPrice(product.getPrice() / divisor);
+		}
+		EntityManager em = XPersistence.getManager();
+		Query q = em.createNativeQuery("DELETE FROM product_ppupdate WHERE ppupdate_id = ?");
+		q.setParameter(1, id);
+		q.executeUpdate();
 	}
 	
 	// Getters & Setters

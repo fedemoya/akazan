@@ -2,6 +2,7 @@ package com.akazan.model;
 
 import javax.persistence.*;
 
+import org.hibernate.validator.constraints.*;
 import org.openxava.annotations.*;
 
 @Entity
@@ -21,6 +22,9 @@ public class Customer {
 	private String lastname;
 
 	private String mobileNumber;
+
+	@Email
+	private String email;
 
 	@Embedded
 	private Address address;

@@ -2,7 +2,6 @@ package com.akazan.model;
 
 import javax.persistence.*;
 
-import org.apache.commons.logging.*;
 import org.openxava.annotations.*;
 
 @Entity

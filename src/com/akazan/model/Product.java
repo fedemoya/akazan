@@ -26,17 +26,14 @@ public class Product {
 
 	private String supplierCode;
 
-	@Required
 	private String line;
 
 	private String variant;
 
 	private String description;
 
-	@Required
 	private Double price;
 	
-	@Required
 	private Integer amount;
 
 	public Long getId() {
