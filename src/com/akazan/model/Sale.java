@@ -5,6 +5,7 @@ import java.util.*;
 import javax.persistence.*;
 
 import org.openxava.annotations.*;
+import org.openxava.calculators.*;
 
 @Entity
 @Table(name="sale")
@@ -20,16 +21,24 @@ public class Sale {
 	
 	@ManyToOne(fetch = FetchType.EAGER, optional = true)
 	@JoinColumn(name = "customer_id")
+	@ReferenceView("CustomerCompactView")
 	private Customer customer;
 	
 	@Required
+	@DefaultValueCalculator(CurrentDateCalculator.class)
 	private Date date;
 	
 	@OneToMany(mappedBy="sale", cascade=CascadeType.ALL)
 	private List<SaleItem> saleItems;
 	
-	// Callbacks
-	
+	@Stereotype("MONEY")
+	public Double getTotal() {
+		Double total = 0.0;
+		for (SaleItem saleItem : saleItems) {
+			total += saleItem.getTotal();
+		}
+		return total;
+	}
 
 	// Getters & Setters
 	

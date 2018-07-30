@@ -6,6 +6,9 @@ import org.openxava.annotations.*;
 
 @Entity
 @Table(name = "supplier")
+@Views({
+	@View(name="SupplierCompactView", members = "name")
+})
 public class Supplier {
 
 	private static final String SEQ_NAME = "supplier_seq";

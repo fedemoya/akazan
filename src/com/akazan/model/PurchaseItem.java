@@ -4,6 +4,9 @@ import javax.persistence.*;
 
 import org.openxava.annotations.*;
 
+import com.akazan.calculators.*;
+
+
 @Entity
 @Table(name = "purchase_item")
 public class PurchaseItem {
@@ -19,28 +22,35 @@ public class PurchaseItem {
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "purchase_id")
 	private Purchase purchase;
-
+	
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "product_id")
 	private Product product;
 
-	private Integer amount;
+	private Integer quantity;
 
-	private Double price;
-	
+	@Stereotype("MONEY")
+	private Double pricePerUnit;
+
 	private Double profitPercentage;
+	
+	@Stereotype("MONEY")
+	@Depends("quantity, pricePerUnit, profitPercentage")
+	public Double getTotal() {
+		return getQuantity() * getPricePerUnit() * (1 +  profitPercentage / 100);
+	}
 	
 	// Callbacks
 	
 	@PostCreate
 	public void increaseProductStock() {
-		product.setAmount(product.getAmount() + amount);
-		product.setPrice(price * (1 +  profitPercentage / 100));
+		product.setQuantity(product.getQuantity() + quantity);
+		product.setPrice(pricePerUnit * (1 +  profitPercentage / 100));
 	}
 	
 	@PreDelete
 	public void decreaseProductStock() {
-		product.setAmount(product.getAmount() - amount);
+		product.setQuantity(product.getQuantity() - quantity);
 		product.setPrice(0.0);
 	}
 	
@@ -62,6 +72,14 @@ public class PurchaseItem {
 		this.purchase = purchase;
 	}
 
+	public Double getProfitPercentage() {
+		return profitPercentage;
+	}
+
+	public void setProfitPercentage(Double profitPercentage) {
+		this.profitPercentage = profitPercentage;
+	}
+
 	public Product getProduct() {
 		return product;
 	}
@@ -70,28 +88,20 @@ public class PurchaseItem {
 		this.product = product;
 	}
 
-	public Integer getAmount() {
-		return amount;
+	public Integer getQuantity() {
+		return quantity;
 	}
 
-	public void setAmount(Integer amount) {
-		this.amount = amount;
+	public void setQuantity(Integer quantity) {
+		this.quantity = quantity;
 	}
 
-	public Double getPrice() {
-		return price;
+	public Double getPricePerUnit() {
+		return pricePerUnit;
 	}
 
-	public void setPrice(Double price) {
-		this.price = price;
-	}
-
-	public Double getProfitPercentage() {
-		return profitPercentage;
-	}
-
-	public void setProfitPercentage(Double profitPercentage) {
-		this.profitPercentage = profitPercentage;
+	public void setPricePerUnit(Double pricePerUnit) {
+		this.pricePerUnit = pricePerUnit;
 	}
 
 }

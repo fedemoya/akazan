@@ -4,6 +4,8 @@ import javax.persistence.*;
 
 import org.openxava.annotations.*;
 
+import com.akazan.calculators.*;
+
 @Entity
 @Table(name = "sale_item")
 public class SaleItem {
@@ -19,25 +21,35 @@ public class SaleItem {
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "sale_id")
 	private Sale sale;
-
+	
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "product_id")
 	private Product product;
 
-	private Integer amount;
+	@Required
+	@DefaultValueCalculator(value = QuantityInSale.class)
+	private Integer quantity;
 
-	private Double price;
+	@DefaultValueCalculator(value = PricePerUnitCalculator.class, properties = @PropertyValue(name = "productId", from = "product.id"))
+	@Stereotype("MONEY")
+	private Double pricePerUnit;
+	
+	@Stereotype("MONEY")
+	@Depends("quantity, pricePerUnit")
+	public Double getTotal() {
+		return getQuantity() * getPricePerUnit();
+	}
 	
 	// Callbacks
 	
 	@PostCreate
 	public void decreaseProductStock() {
-		product.setAmount(product.getAmount() - amount);
+		product.setQuantity(product.getQuantity() - quantity);
 	}
 	
 	@PreDelete
 	public void increaseProductStock() {
-		product.setAmount(product.getAmount() + amount);
+		product.setQuantity(product.getQuantity() + quantity);
 	}
 	
 	// Getters & Setters
@@ -66,20 +78,20 @@ public class SaleItem {
 		this.product = product;
 	}
 
-	public Integer getAmount() {
-		return amount;
+	public Integer getQuantity() {
+		return quantity;
 	}
 
-	public void setAmount(Integer amount) {
-		this.amount = amount;
+	public void setQuantity(Integer quantity) {
+		this.quantity = quantity;
 	}
 
-	public Double getPrice() {
-		return price;
+	public Double getPricePerUnit() {
+		return pricePerUnit;
 	}
 
-	public void setPrice(Double price) {
-		this.price = price;
+	public void setPricePerUnit(Double pricePerUnit) {
+		this.pricePerUnit = pricePerUnit;
 	}
 
 }

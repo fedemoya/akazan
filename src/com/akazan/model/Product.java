@@ -4,6 +4,8 @@ import javax.persistence.*;
 
 import org.openxava.annotations.*;
 
+import com.akazan.calculators.*;
+
 @Entity
 @Table(name = "product")
 public class Product {
@@ -34,7 +36,8 @@ public class Product {
 
 	private Double price;
 	
-	private Integer amount;
+	@DefaultValueCalculator(value = ProductQuantityCalculator.class)
+	private Integer quantity;
 
 	public Long getId() {
 		return id;
@@ -99,13 +102,13 @@ public class Product {
 	public void setPrice(Double price) {
 		this.price = price;
 	}
-	
-	public Integer getAmount() {
-		return amount;
+
+	public Integer getQuantity() {
+		return quantity;
 	}
 
-	public void setAmount(Integer amount) {
-		this.amount = amount;
+	public void setQuantity(Integer quantity) {
+		this.quantity = quantity;
 	}
 
 }

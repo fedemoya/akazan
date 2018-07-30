@@ -5,6 +5,7 @@ import java.util.*;
 import javax.persistence.*;
 
 import org.openxava.annotations.*;
+import org.openxava.calculators.*;
 import org.openxava.jpa.*;
 
 @Entity
@@ -20,6 +21,7 @@ public class ProductPriceUpdate {
 	private Long id;
 	
 	@Required
+	@DefaultValueCalculator(CurrentDateCalculator.class)
 	private Date date;
 	
 	@Required

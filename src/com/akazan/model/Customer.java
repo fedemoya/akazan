@@ -6,9 +6,13 @@ import org.hibernate.validator.constraints.*;
 import org.openxava.annotations.*;
 
 @Entity
+@Table(name="customer")
+@Views({
+	@View(name="CustomerCompactView", members = "name, lastname")
+})
 public class Customer {
 
-	private static final String SEQ_NAME = "client_seq";
+	private static final String SEQ_NAME = "customer_seq";
 
 	@Id
 	@SequenceGenerator(name = SEQ_NAME, catalog = "akazan", sequenceName = SEQ_NAME, allocationSize = 1, initialValue = 1)
