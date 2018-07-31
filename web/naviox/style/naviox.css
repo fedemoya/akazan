@@ -1274,12 +1274,13 @@ div.ox-subcontroller table{
  
 #welcome {
 	background-image: url("../images/background.jpg"); 
-	background-position: left top;
-    background-size: auto 100vw;
-    background-repeat: no-repeat;
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-size: cover;
+	background-attachment: fixed;
 	margin: 20px;
 	font-size: 25px; 
-	color: white; 
+	color: black; 
 	text-align: center; 
 }
 

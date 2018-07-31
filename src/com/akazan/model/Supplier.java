@@ -2,6 +2,7 @@ package com.akazan.model;
 
 import javax.persistence.*;
 
+import org.hibernate.validator.constraints.*;
 import org.openxava.annotations.*;
 
 @Entity
@@ -21,13 +22,16 @@ public class Supplier {
 
 	@Required
 	private String name;
+	
+	@Email
+	private String email;
 
 	private String phoneNumber;
 
 	@Embedded
 	private Address address;
 
-	private String iva;
+	private String vat;
 
 	private String cuit;
 
@@ -47,6 +51,14 @@ public class Supplier {
 		this.name = name;
 	}
 
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
 	public String getPhoneNumber() {
 		return phoneNumber;
 	}
@@ -63,12 +75,12 @@ public class Supplier {
 		this.address = address;
 	}
 
-	public String getIva() {
-		return iva;
+	public String getVat() {
+		return vat;
 	}
 
-	public void setIva(String iva) {
-		this.iva = iva;
+	public void setVat(String vat) {
+		this.vat = vat;
 	}
 
 	public String getCuit() {
