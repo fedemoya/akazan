@@ -37,7 +37,7 @@ public class PurchaseItem {
 	@Stereotype("MONEY")
 	@Depends("quantity, pricePerUnit, profitPercentage")
 	public Double getTotal() {
-		return getQuantity() * getPricePerUnit() * (1 +  profitPercentage / 100);
+		return getQuantity() * getPricePerUnit();
 	}
 	
 	// Callbacks
