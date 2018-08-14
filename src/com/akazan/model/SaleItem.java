@@ -24,6 +24,7 @@ public class SaleItem {
 	
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "product_id")
+	@ReferenceView("ProductCompactView")
 	private Product product;
 
 	@Required
