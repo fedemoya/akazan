@@ -32,10 +32,11 @@ public class PurchaseItem {
 	@Stereotype("MONEY")
 	private Double pricePerUnit;
 
+	@DefaultValueCalculator(value = PurchaseItemProfitCalculator.class, properties = @PropertyValue(name = "productId", from = "product.id"))
 	private Double profitPercentage;
 	
 	@Stereotype("MONEY")
-	@Depends("quantity, pricePerUnit, profitPercentage")
+	@Depends("quantity, pricePerUnit")
 	public Double getTotal() {
 		return getQuantity() * getPricePerUnit();
 	}

@@ -1,13 +1,18 @@
 package com.akazan.model;
 
+import java.util.*;
+
 import javax.persistence.*;
 
 import org.openxava.annotations.*;
+import org.openxava.jpa.*;
 
 import com.akazan.calculators.*;
 
 @Entity
 @Table(name = "product")
+@View(members="data {supplierCode;category;brand;line;variant;description;price;profitPercentage;quantity}"
+		+ " purchases { purchases }")
 public class Product {
 
 	private static final String SEQ_NAME = "product_seq";
@@ -36,8 +41,14 @@ public class Product {
 
 	private Double price;
 	
+	@Transient
+	private Double profitPercentage;
+	
 	@DefaultValueCalculator(value = ProductQuantityCalculator.class)
 	private Integer quantity;
+	
+	@OneToMany(mappedBy="product")
+	private Collection<PurchaseItem> purchases;
 
 	public Long getId() {
 		return id;
@@ -102,6 +113,20 @@ public class Product {
 	public void setPrice(Double price) {
 		this.price = price;
 	}
+	
+	public Double getProfitPercentage() {
+		if (profitPercentage != null) {
+			return profitPercentage;
+		} else {
+			EntityManager em = XPersistence.getManager();
+			Query q = em.createNativeQuery("SELECT profitpercentage FROM purchase_item WHERE product_id=? ORDER BY id DESC LIMIT 1");
+			q.setParameter(1, id);
+			@SuppressWarnings("unchecked")
+			List<Object> results = q.getResultList();
+			Object profitPercentage = results.get(0);
+		    return profitPercentage == null ? 0.0 : (Double) profitPercentage;
+		}
+	}
 
 	public Integer getQuantity() {
 		return quantity;
@@ -109,6 +134,14 @@ public class Product {
 
 	public void setQuantity(Integer quantity) {
 		this.quantity = quantity;
+	}
+
+	public Collection<PurchaseItem> getPurchases() {
+		return purchases;
+	}
+
+	public void setPurchases(Collection<PurchaseItem> purchases) {
+		this.purchases = purchases;
 	}
 
 }
