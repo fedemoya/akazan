@@ -13,7 +13,7 @@ import com.akazan.calculators.*;
 @Table(name = "product")
 @Views({@View(members="data {supplierCode;category;brand;line;variant;description;price;profitPercentage;quantity}"
 		+ " purchases { purchases }"),
-		@View(name="ProductCompactView", members="category;brand;line;variant;description")})
+		@View(name="ProductCompactView", members="supplierCode;category;brand;line;variant;description")})
 public class Product {
 
 	private static final String SEQ_NAME = "product_seq";
