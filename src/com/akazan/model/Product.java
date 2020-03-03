@@ -42,6 +42,15 @@ public class Product {
 
 	private Double price;
 	
+	@DefaultValueCalculator(value = ProductDiscountCalculator.class)
+	private Double discount;
+	
+	@DefaultValueCalculator(value = ProductSurcharge1Calculator.class)
+	private Double surcharge1;
+	
+	@DefaultValueCalculator(value = ProductSurcharge3Calculator.class)
+	private Double surcharge3;
+	
 	@DefaultValueCalculator(value = ProductQuantityCalculator.class)
 	private Integer quantity;
 	
@@ -140,6 +149,30 @@ public class Product {
 
 	public void setPurchases(Collection<PurchaseItem> purchases) {
 		this.purchases = purchases;
+	}
+
+	public Double getDiscount() {
+		return discount;
+	}
+
+	public void setDiscount(Double discount) {
+		this.discount = discount;
+	}
+
+	public Double getSurcharge1() {
+		return surcharge1;
+	}
+
+	public void setSurcharge1(Double surcharge1) {
+		this.surcharge1 = surcharge1;
+	}
+
+	public Double getSurcharge3() {
+		return surcharge3;
+	}
+
+	public void setSurcharge3(Double surcharge3) {
+		this.surcharge3 = surcharge3;
 	}
 
 }

@@ -11,7 +11,7 @@ import com.akazan.calculators.*;
 public class SaleItem {
 
 	private static final String SEQ_NAME = "sale_item_seq";
-
+	
 	@Id
 	@SequenceGenerator(name = SEQ_NAME, catalog = "akazan", sequenceName = SEQ_NAME, allocationSize = 1, initialValue = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SEQ_NAME)
@@ -30,8 +30,22 @@ public class SaleItem {
 	@Required
 	@DefaultValueCalculator(value = QuantityInSale.class)
 	private Integer quantity;
+	
+	@DefaultValueCalculator(value = PayCashCalculator.class)
+	private Boolean payCash;
+	@DefaultValueCalculator(value = PayCard1Calculator.class)
+	private Boolean payCard1;
+	@DefaultValueCalculator(value = PayCard3Calculator.class)
+	private Boolean payCard3;
 
-	@DefaultValueCalculator(value = PricePerUnitCalculator.class, properties = @PropertyValue(name = "productId", from = "product.id"))
+	@DefaultValueCalculator(
+			value = PricePerUnitCalculator.class,
+			properties = {
+					@PropertyValue(name = "productId", from = "product.id"),
+					@PropertyValue(name = "payCash", from = "payCash"),
+					@PropertyValue(name = "payCard1", from = "payCard1"),
+					@PropertyValue(name = "payCard3", from = "payCard3"),
+			})
 	@Stereotype("MONEY")
 	private Double pricePerUnit;
 	
@@ -93,6 +107,30 @@ public class SaleItem {
 
 	public void setPricePerUnit(Double pricePerUnit) {
 		this.pricePerUnit = pricePerUnit;
+	}
+
+	public Boolean getPayCash() {
+		return payCash;
+	}
+
+	public void setPayCash(Boolean payCash) {
+		this.payCash = payCash;
+	}
+
+	public Boolean getPayCard1() {
+		return payCard1;
+	}
+
+	public void setPayCard1(Boolean payCard1) {
+		this.payCard1 = payCard1;
+	}
+
+	public Boolean getPayCard3() {
+		return payCard3;
+	}
+
+	public void setPayCard3(Boolean payCard3) {
+		this.payCard3 = payCard3;
 	}
 
 }
