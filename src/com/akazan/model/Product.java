@@ -11,7 +11,7 @@ import com.akazan.calculators.*;
 
 @Entity
 @Table(name = "product")
-@Views({@View(members="data {supplierCode;category;brand;line;variant;description;price;priceWithDiscount;priceWithSurcharge1;priceWithSurcharge3;quantity}"
+@Views({@View(members="data {supplierCode;category;brand;line;variant;description;price;discount;surcharge1;surcharge3;quantity}"
 		+ " purchases { purchases }"),
 		@View(name="ProductCompactView", members="supplierCode;category;brand;line;variant;description")})
 public class Product {
@@ -71,17 +71,17 @@ public class Product {
 		}
 	}
 	
-	public Double getPriceWithDiscount() {
-		return price - (price * (this.getDiscount() / 100.00));
-	}
-	
-	public Double getPriceWithSurcharge1() {
-		return this.getPrice() * (1 + (this.getSurcharge1() / 100.00)); 
-	}
-	
-	public Double getPriceWithSurcharge3() {
-		return this.getPrice() * (1 + (this.getSurcharge3() / 100.00)); 
-	}
+//	public Double getPriceWithDiscount() {
+//		return price - (price * (this.getDiscount() / 100.00));
+//	}
+//	
+//	public Double getPriceWithSurcharge1() {
+//		return this.getPrice() * (1 + (this.getSurcharge1() / 100.00)); 
+//	}
+//	
+//	public Double getPriceWithSurcharge3() {
+//		return this.getPrice() * (1 + (this.	() / 100.00)); 
+//	}
 
 	public Long getId() {
 		return id;

@@ -22,7 +22,7 @@ public class PricePerUnitCalculator implements ICalculator {
 		} else if (payCard1) {
 			return product.getPrice() * (1 + (product.getSurcharge1() / 100.00)); 
 		} else if (payCard3) {
-			return product.getPrice() * (1 + (product.getSurcharge1() / 100.00));
+			return product.getPrice() * (1 + (product.getSurcharge3() / 100.00));
 		} else {
 			return price;
 		}
